@@ -8,7 +8,7 @@ func CreateWriteFile(path string) (*os.File, error) {
 
 func CreateDirectoryIfNotExist(path string) error {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		if err := os.Mkdir(path, os.ModeDir); err != nil {
+		if err := os.Mkdir(path, 0755); err != nil {
 			return err
 		}
 	}
