@@ -1,6 +1,7 @@
 package gofiles
 
 import (
+	"bufio"
 	"fmt"
 	"io"
 	"os"
@@ -47,4 +48,19 @@ func CopyFile(src string, dst string) error {
 	}
 
 	return dstFile.Sync()
+}
+
+func WriteLines(path string, lines []string) error {
+	file, err := CreateWriteFile(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	w := bufio.NewWriter(file)
+	for _, line := range lines {
+		fmt.Fprintln(w, line)
+	}
+
+	return w.Flush()
 }
