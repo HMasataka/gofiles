@@ -64,3 +64,23 @@ func WriteLines(path string, lines []string) error {
 
 	return w.Flush()
 }
+
+func ReadFileAll(path string) ([]byte, error) {
+	return os.ReadFile(path)
+}
+
+func ReadLinesYield(path string) (func(func(string) bool), error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+
+	return func(yield func(string) bool) {
+		defer file.Close()
+
+		scanner := bufio.NewScanner(file)
+		for scanner.Scan() {
+			yield(scanner.Text())
+		}
+	}, nil
+}
