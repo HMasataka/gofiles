@@ -9,6 +9,15 @@ func Pwd() (string, error) {
 	return filepath.Abs(filepath.Dir(os.Args[0]))
 }
 
+func IsDir(path string) bool {
+	info, err := os.Stat(path)
+	if os.IsNotExist(err) {
+		return false
+	}
+
+	return info.IsDir()
+}
+
 func CreateDirectoryIfNotExist(path string) error {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		if err := os.Mkdir(path, 0755); err != nil {

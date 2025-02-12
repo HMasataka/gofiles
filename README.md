@@ -6,6 +6,7 @@ golang file utilities
 
 ### File
 
+- `IsFile`
 - `CreateWriteFile`
 - `CopyFile`
 - `ReadFileAll`
@@ -14,6 +15,7 @@ golang file utilities
 
 ### Directory
 
+- `IsDir`
 - `Pwd`
 - `CreateDirectoryIfNotExist`
 - `ListFiles` & `ListFilesYield`

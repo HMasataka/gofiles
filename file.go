@@ -8,6 +8,15 @@ import (
 	"path/filepath"
 )
 
+func IsFile(path string) bool {
+	info, err := os.Stat(path)
+	if os.IsNotExist(err) {
+		return false
+	}
+
+	return !info.IsDir()
+}
+
 func CreateWriteFile(path string) (*os.File, error) {
 	return os.OpenFile(path, os.O_CREATE|os.O_WRONLY, 0644)
 }
