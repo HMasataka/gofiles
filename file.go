@@ -21,6 +21,10 @@ func CreateWriteFile(path string) (*os.File, error) {
 	return os.OpenFile(path, os.O_CREATE|os.O_WRONLY, 0644)
 }
 
+func OpenAppendFile(path string) (*os.File, error) {
+	return os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+}
+
 func CopyFile(src string, dst string) error {
 	srcInfo, err := os.Stat(src)
 	if err != nil {
@@ -72,6 +76,16 @@ func WriteLines(path string, lines []string) error {
 	}
 
 	return w.Flush()
+}
+
+func AppendToFile(path string, text string) (int, error) {
+	file, err := OpenAppendFile(path)
+	if err != nil {
+		return 0, err
+	}
+	defer file.Close()
+
+	return file.WriteString(text)
 }
 
 func ReadFileAll(path string) ([]byte, error) {
